@@ -23,6 +23,11 @@ const priorityColors = {
 };
 
 export function TicketCard({ ticket, isDragging = false }: TicketCardProps) {
+  const handleDragStart = (e: React.DragEvent) => {
+    e.dataTransfer.setData("text/plain", ticket.id);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
   return (
     <div
       className={cn(
@@ -30,6 +35,7 @@ export function TicketCard({ ticket, isDragging = false }: TicketCardProps) {
         isDragging && "rotate-3 scale-105 shadow-hover"
       )}
       draggable
+      onDragStart={handleDragStart}
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-3">

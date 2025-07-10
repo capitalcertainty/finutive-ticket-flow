@@ -7,6 +7,8 @@ interface KanbanColumnProps {
   tickets: Ticket[];
   count: number;
   color?: "primary" | "warning" | "info" | "success";
+  status: Ticket["status"];
+  onTicketMove: (ticketId: string, newStatus: Ticket["status"]) => void;
 }
 
 const colorClasses = {
@@ -16,9 +18,23 @@ const colorClasses = {
   success: "bg-success text-success-foreground"
 };
 
-export function KanbanColumn({ title, tickets, count, color = "primary" }: KanbanColumnProps) {
+export function KanbanColumn({ title, tickets, count, color = "primary", status, onTicketMove }: KanbanColumnProps) {
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const ticketId = e.dataTransfer.getData("text/plain");
+    onTicketMove(ticketId, status);
+  };
+
   return (
-    <div className="flex-1 min-w-80 bg-muted/30 rounded-lg p-4">
+    <div 
+      className="flex-1 min-w-80 bg-muted/30 rounded-lg p-4"
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
       {/* Column Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">

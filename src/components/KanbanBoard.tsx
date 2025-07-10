@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { KanbanColumn } from "./KanbanColumn";
 import { KanbanHeader } from "./KanbanHeader";
 import { Ticket } from "./TicketCard";
@@ -76,11 +77,21 @@ const sampleTickets: Ticket[] = [
 ];
 
 export function KanbanBoard() {
+  const [tickets, setTickets] = useState<Ticket[]>(sampleTickets);
+  
+  const handleTicketMove = (ticketId: string, newStatus: Ticket["status"]) => {
+    setTickets(prevTickets => 
+      prevTickets.map(ticket => 
+        ticket.id === ticketId ? { ...ticket, status: newStatus } : ticket
+      )
+    );
+  };
+
   // Group tickets by status
-  const todoTickets = sampleTickets.filter(t => t.status === "open");
-  const inProgressTickets = sampleTickets.filter(t => t.status === "in-progress");
-  const reviewTickets = sampleTickets.filter(t => t.status === "review");
-  const doneTickets = sampleTickets.filter(t => t.status === "done");
+  const todoTickets = tickets.filter(t => t.status === "open");
+  const inProgressTickets = tickets.filter(t => t.status === "in-progress");
+  const reviewTickets = tickets.filter(t => t.status === "review");
+  const doneTickets = tickets.filter(t => t.status === "done");
 
   return (
     <div className="flex-1 flex flex-col bg-background min-h-screen">
@@ -93,24 +104,32 @@ export function KanbanBoard() {
             tickets={todoTickets}
             count={todoTickets.length}
             color="primary"
+            status="open"
+            onTicketMove={handleTicketMove}
           />
           <KanbanColumn
             title="In Progress"
             tickets={inProgressTickets}
             count={inProgressTickets.length}
             color="warning"
+            status="in-progress"
+            onTicketMove={handleTicketMove}
           />
           <KanbanColumn
             title="Review"
             tickets={reviewTickets}
             count={reviewTickets.length}
             color="info"
+            status="review"
+            onTicketMove={handleTicketMove}
           />
           <KanbanColumn
             title="Done"
             tickets={doneTickets}
             count={doneTickets.length}
             color="success"
+            status="done"
+            onTicketMove={handleTicketMove}
           />
         </div>
       </div>
