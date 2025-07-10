@@ -87,6 +87,23 @@ export function KanbanBoard() {
     );
   };
 
+  const handleAddTicket = (status: Ticket["status"]) => {
+    const ticketName = prompt("Enter ticket name:");
+    if (!ticketName || ticketName.trim() === "") return;
+
+    const newTicket: Ticket = {
+      id: Math.random().toString(36).substring(2, 15),
+      name: ticketName.trim(),
+      status,
+      chatbot: "New Chatbot",
+      createdAt: new Date().toISOString(),
+      lastMessageAt: new Date().toISOString(),
+      priority: "medium"
+    };
+
+    setTickets(prevTickets => [...prevTickets, newTicket]);
+  };
+
   // Group tickets by status
   const todoTickets = tickets.filter(t => t.status === "open");
   const inProgressTickets = tickets.filter(t => t.status === "in-progress");
@@ -106,6 +123,7 @@ export function KanbanBoard() {
             color="primary"
             status="open"
             onTicketMove={handleTicketMove}
+            onAddTicket={handleAddTicket}
           />
           <KanbanColumn
             title="In Progress"
@@ -114,6 +132,7 @@ export function KanbanBoard() {
             color="warning"
             status="in-progress"
             onTicketMove={handleTicketMove}
+            onAddTicket={handleAddTicket}
           />
           <KanbanColumn
             title="Review"
@@ -122,6 +141,7 @@ export function KanbanBoard() {
             color="info"
             status="review"
             onTicketMove={handleTicketMove}
+            onAddTicket={handleAddTicket}
           />
           <KanbanColumn
             title="Done"
@@ -130,6 +150,7 @@ export function KanbanBoard() {
             color="success"
             status="done"
             onTicketMove={handleTicketMove}
+            onAddTicket={handleAddTicket}
           />
         </div>
       </div>

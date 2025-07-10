@@ -9,6 +9,7 @@ interface KanbanColumnProps {
   color?: "primary" | "warning" | "info" | "success";
   status: Ticket["status"];
   onTicketMove: (ticketId: string, newStatus: Ticket["status"]) => void;
+  onAddTicket: (status: Ticket["status"]) => void;
 }
 
 const colorClasses = {
@@ -18,7 +19,7 @@ const colorClasses = {
   success: "bg-success text-success-foreground"
 };
 
-export function KanbanColumn({ title, tickets, count, color = "primary", status, onTicketMove }: KanbanColumnProps) {
+export function KanbanColumn({ title, tickets, count, color = "primary", status, onTicketMove, onAddTicket }: KanbanColumnProps) {
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
   };
@@ -46,7 +47,10 @@ export function KanbanColumn({ title, tickets, count, color = "primary", status,
             {count}/{tickets.length}
           </span>
         </div>
-        <button className="p-1 hover:bg-accent rounded transition-colors">
+        <button 
+          className="p-1 hover:bg-accent rounded transition-colors"
+          onClick={() => onAddTicket(status)}
+        >
           <Plus className="w-4 h-4 text-muted-foreground" />
         </button>
       </div>
@@ -58,7 +62,10 @@ export function KanbanColumn({ title, tickets, count, color = "primary", status,
         ))}
         
         {/* Add Card Button */}
-        <button className="w-full border-2 border-dashed border-border hover:border-accent-foreground transition-colors rounded-lg p-4 text-muted-foreground hover:text-accent-foreground flex items-center justify-center gap-2 group">
+        <button 
+          className="w-full border-2 border-dashed border-border hover:border-accent-foreground transition-colors rounded-lg p-4 text-muted-foreground hover:text-accent-foreground flex items-center justify-center gap-2 group"
+          onClick={() => onAddTicket(status)}
+        >
           <Plus className="w-4 h-4 group-hover:scale-110 transition-transform" />
           <span className="text-sm">Add a ticket</span>
         </button>
