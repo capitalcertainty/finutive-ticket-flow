@@ -97,7 +97,7 @@ export function KanbanBoard() {
     <div className="flex-1 flex flex-col bg-background min-h-screen">
       <KanbanHeader totalResults={sampleTickets.length} />
       
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-6 bg-white">
         <div className="flex gap-6 overflow-x-auto pb-6">
           <KanbanColumn
             title="To Do"

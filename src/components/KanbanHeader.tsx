@@ -8,7 +8,7 @@ interface KanbanHeaderProps {
 
 export function KanbanHeader({ totalResults }: KanbanHeaderProps) {
   return (
-    <div className="bg-card border-b border-border p-6">
+    <div className="bg-white border-b border-border p-6">
       <div className="flex items-center justify-between">
         {/* Left Section */}
         <div className="flex items-center gap-6">
