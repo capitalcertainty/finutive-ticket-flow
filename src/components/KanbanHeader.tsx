@@ -17,7 +17,7 @@ export function KanbanHeader({ totalResults }: KanbanHeaderProps) {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input 
               placeholder="Search tickets..."
-              className="pl-10 w-80"
+              className="pl-10 w-80 bg-primary/10 border-primary/20 focus:border-primary"
             />
           </div>
         </div>
